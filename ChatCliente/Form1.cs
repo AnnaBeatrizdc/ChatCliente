@@ -10,11 +10,11 @@ namespace ChatCliente
         Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
         IPEndPoint servidor = new IPEndPoint(
-            IPAddress.Parse("192.168.0.4"), 9060
+            IPAddress.Parse("172.20.10.2"), 9060
         );
 
         Thread threadReceber;
-        
+
         public Form1()
         {
             InitializeComponent();
@@ -66,6 +66,28 @@ namespace ChatCliente
             lstMensagem.Items.Add("Você: " + mensagem);
 
             txtMensagem.Clear();
+        }
+
+        private void btnConectar_Click(object sender, EventArgs e)
+        {
+            string nome = txtUsuario.Text.Trim();
+
+            if (nome == "")
+            {
+                MessageBox.Show("Digite seu nome.");
+                return;
+            }
+
+            string mensagem = "CONECTAR|" + nome;
+
+            byte[] dados = Encoding.UTF8.GetBytes(mensagem);
+
+            socket.SendTo(dados, servidor);
+
+            MessageBox.Show("Conectado como " + nome);
+
+            txtUsuario.Enabled = false;
+            btnConectar.Enabled = false;
         }
     }
 }
