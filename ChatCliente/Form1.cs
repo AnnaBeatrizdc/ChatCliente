@@ -10,7 +10,7 @@ namespace ChatCliente
         Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
         IPEndPoint servidor = new IPEndPoint(
-            IPAddress.Parse("172.20.10.2"), 9060
+            IPAddress.Parse("192.168.0.2"), 9060
         );
 
         Thread threadReceber;
@@ -30,30 +30,59 @@ namespace ChatCliente
         {
             while (true)
             {
-                byte[] dados = new byte[1024];
-
-                EndPoint remetente = new IPEndPoint(
-                    IPAddress.Any,
-                    0
-                );
-
-                int quantidade = socket.ReceiveFrom(
-                    dados,
-                    ref remetente
-                );
-
-                string mensagem = Encoding.UTF8.GetString(
-                    dados,
-                    0,
-                    quantidade
-                );
-
-                Invoke(new Action(() =>
+                try
                 {
-                    lstMensagem.Items.Add(mensagem);
-                }));
+                    byte[] dados = new byte[1024];
+
+                    EndPoint remetente = new IPEndPoint(
+                        IPAddress.Any,
+                        0
+                    );
+
+                    int quantidade = socket.ReceiveFrom(
+                        dados,
+                        ref remetente
+                    );
+
+                    string mensagem = Encoding.UTF8.GetString(
+                        dados,
+                        0,
+                        quantidade
+                    );
+
+                    Invoke(new Action(() =>
+                    {
+                        if (mensagem.StartsWith("USUARIOS|"))
+                        {
+                            string[] partes = mensagem.Split('|');
+
+                            lstUsuarios.Items.Clear();
+
+                            for (int i = 1; i < partes.Length; i++)
+                            {
+                                lstUsuarios.Items.Add(partes[i]);
+                            }
+                        }
+                        else
+                        {
+                            lstMensagem.Items.Add(mensagem);
+                        }
+                    }));
+                }
+                catch (SocketException)
+                {
+                    // Evita que o programa seja encerrado caso ocorra
+                    // alguma interrupção temporária na comunicação.
+                }
+                catch (ObjectDisposedException)
+                {
+                    // O socket foi fechado ao encerrar o programa.
+                    break;
+                }
             }
         }
+
+
 
         private void btnEnviar_Click(object sender, EventArgs e)
         {
