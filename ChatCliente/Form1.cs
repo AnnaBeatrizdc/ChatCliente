@@ -63,9 +63,19 @@ namespace ChatCliente
                                 lstUsuarios.Items.Add(partes[i]);
                             }
                         }
-                        else
+                        else if (mensagem.StartsWith("MENSAGEM|"))
                         {
-                            lstMensagem.Items.Add(mensagem);
+                            string[] partes = mensagem.Split('|', 3);
+
+                            if (partes.Length == 3)
+                            {
+                                string remetente = partes[1];
+                                string texto = partes[2];
+
+                                lstMensagem.Items.Add(
+                                    remetente + ": " + texto
+                                );
+                            }
                         }
                     }));
                 }
@@ -86,16 +96,38 @@ namespace ChatCliente
 
         private void btnEnviar_Click(object sender, EventArgs e)
         {
-            string mensagem = txtMensagem.Text;
+            // Verifica se um usuário foi selecionado
+            if (lstUsuarios.SelectedItem == null)
+            {
+                MessageBox.Show("Selecione um usuário para enviar a mensagem.");
+                return;
+            }
 
-            byte[] dados = Encoding.UTF8.GetBytes(mensagem);
+            string mensagem = txtMensagem.Text.Trim();
+
+            if (mensagem == "")
+            {
+                MessageBox.Show("Digite uma mensagem.");
+                return;
+            }
+
+            string destinatario = lstUsuarios.SelectedItem.ToString();
+
+            // Monta a mensagem que será enviada ao servidor
+            string mensagemEnviar =
+                "MENSAGEM|" + destinatario + "|" + mensagem;
+
+            byte[] dados = Encoding.UTF8.GetBytes(mensagemEnviar);
 
             socket.SendTo(dados, servidor);
 
-            lstMensagem.Items.Add("Você: " + mensagem);
+            lstMensagem.Items.Add(
+                "Você para " + destinatario + ": " + mensagem
+            );
 
             txtMensagem.Clear();
         }
+        
 
         private void btnConectar_Click(object sender, EventArgs e)
         {
