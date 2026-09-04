@@ -31,27 +31,23 @@
             lstMensagem = new ListBox();
             btnEnviar = new Button();
             txtMensagem = new TextBox();
-            btnConectar = new Button();
-            txtUsuario = new TextBox();
             lstUsuarios = new ListBox();
             SuspendLayout();
             // 
             // lstMensagem
             // 
             lstMensagem.FormattingEnabled = true;
-            lstMensagem.ItemHeight = 20;
-            lstMensagem.Location = new Point(191, 76);
-            lstMensagem.Margin = new Padding(3, 4, 3, 4);
+            lstMensagem.ItemHeight = 15;
+            lstMensagem.Location = new Point(167, 57);
             lstMensagem.Name = "lstMensagem";
-            lstMensagem.Size = new Size(426, 344);
+            lstMensagem.Size = new Size(373, 259);
             lstMensagem.TabIndex = 5;
             // 
             // btnEnviar
             // 
-            btnEnviar.Location = new Point(354, 428);
-            btnEnviar.Margin = new Padding(3, 4, 3, 4);
+            btnEnviar.Location = new Point(310, 321);
             btnEnviar.Name = "btnEnviar";
-            btnEnviar.Size = new Size(86, 31);
+            btnEnviar.Size = new Size(75, 23);
             btnEnviar.TabIndex = 4;
             btnEnviar.Text = "Enviar";
             btnEnviar.UseVisualStyleBackColor = true;
@@ -59,55 +55,31 @@
             // 
             // txtMensagem
             // 
-            txtMensagem.Location = new Point(14, 428);
-            txtMensagem.Margin = new Padding(3, 4, 3, 4);
+            txtMensagem.Location = new Point(12, 321);
             txtMensagem.Name = "txtMensagem";
-            txtMensagem.Size = new Size(321, 27);
+            txtMensagem.Size = new Size(281, 23);
             txtMensagem.TabIndex = 3;
-            // 
-            // btnConectar
-            // 
-            btnConectar.Location = new Point(273, 21);
-            btnConectar.Margin = new Padding(3, 4, 3, 4);
-            btnConectar.Name = "btnConectar";
-            btnConectar.Size = new Size(167, 31);
-            btnConectar.TabIndex = 7;
-            btnConectar.Text = "Conectar";
-            btnConectar.UseVisualStyleBackColor = true;
-            btnConectar.Click += btnConectar_Click;
-            // 
-            // txtUsuario
-            // 
-            txtUsuario.Location = new Point(14, 21);
-            txtUsuario.Margin = new Padding(3, 4, 3, 4);
-            txtUsuario.Name = "txtUsuario";
-            txtUsuario.Size = new Size(252, 27);
-            txtUsuario.TabIndex = 6;
             // 
             // lstUsuarios
             // 
             lstUsuarios.FormattingEnabled = true;
-            lstUsuarios.ItemHeight = 20;
-            lstUsuarios.Location = new Point(12, 76);
-            lstUsuarios.Margin = new Padding(3, 4, 3, 4);
+            lstUsuarios.ItemHeight = 15;
+            lstUsuarios.Location = new Point(10, 57);
             lstUsuarios.Name = "lstUsuarios";
-            lstUsuarios.Size = new Size(165, 344);
+            lstUsuarios.Size = new Size(145, 259);
             lstUsuarios.TabIndex = 8;
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(629, 469);
+            ClientSize = new Size(550, 352);
             Controls.Add(lstUsuarios);
-            Controls.Add(btnConectar);
-            Controls.Add(txtUsuario);
             Controls.Add(lstMensagem);
             Controls.Add(btnEnviar);
             Controls.Add(txtMensagem);
-            Margin = new Padding(3, 4, 3, 4);
             Name = "Form1";
-            Text = "Form1";
+            Text = "Orkut | Inicio";
             ResumeLayout(false);
             PerformLayout();
 
@@ -118,8 +90,6 @@
         private ListBox lstMensagem;
         private Button btnEnviar;
         private TextBox txtMensagem;
-        private Button btnConectar;
-        private TextBox txtUsuario;
         private ListBox lstUsuarios;
     }
 }

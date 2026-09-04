@@ -15,15 +15,23 @@ namespace ChatCliente
 
         Thread threadReceber;
 
-        public Form1()
+        private string nomeUsuario;
+
+        public Form1(string nome)
         {
             InitializeComponent();
+
+            InitializeComponent();
+
+            nomeUsuario = nome;
 
             socket.Bind(new IPEndPoint(IPAddress.Any, 0));
 
             threadReceber = new Thread(ReceberMensagens);
             threadReceber.IsBackground = true;
             threadReceber.Start();
+
+            ConectarAoServidor();
         }
 
         private void ReceberMensagens()
@@ -92,7 +100,14 @@ namespace ChatCliente
             }
         }
 
+        private void ConectarAoServidor()
+        {
+            string mensagem = "CONECTAR|" + nomeUsuario;
 
+            byte[] dados = Encoding.UTF8.GetBytes(mensagem);
+
+            socket.SendTo(dados, servidor);
+        }
 
         private void btnEnviar_Click(object sender, EventArgs e)
         {
@@ -129,26 +144,26 @@ namespace ChatCliente
         }
         
 
-        private void btnConectar_Click(object sender, EventArgs e)
-        {
-            string nome = txtUsuario.Text.Trim();
+        //private void btnConectar_Click(object sender, EventArgs e)
+        //{
+        //    string nome = txtUsuario.Text.Trim();
 
-            if (nome == "")
-            {
-                MessageBox.Show("Digite seu nome.");
-                return;
-            }
+        //    if (nome == "")
+        //    {
+        //        MessageBox.Show("Digite seu nome.");
+        //        return;
+        //    }
 
-            string mensagem = "CONECTAR|" + nome;
+        //    string mensagem = "CONECTAR|" + nome;
 
-            byte[] dados = Encoding.UTF8.GetBytes(mensagem);
+        //    byte[] dados = Encoding.UTF8.GetBytes(mensagem);
 
-            socket.SendTo(dados, servidor);
+        //    socket.SendTo(dados, servidor);
 
-            MessageBox.Show("Conectado como " + nome);
+        //    MessageBox.Show("Conectado como " + nome);
 
-            txtUsuario.Enabled = false;
-            btnConectar.Enabled = false;
-        }
+        //    txtUsuario.Enabled = false;
+        //    btnConectar.Enabled = false;
+        //}
     }
 }
